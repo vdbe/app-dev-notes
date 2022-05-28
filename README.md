@@ -102,7 +102,7 @@ This is used by Google Play to check app compatibility
 - Activity class creates window
 - Lifecycle translates into a lot of methods in the activity
 
-![structure](./assets/activity-structure.png =420x)
+<img src="./assets/activity-structure.png" width="420"/>
 
 ```java
 public class MainActivity extends AppCompatActivity {
@@ -269,5 +269,6 @@ public class MainActivity extends AppCompatActivity {
     Debug, Release
 - Manifest Entries
     Overrides value of the manifest: App Name, min API version, target API version
-![structure](./assets/gradle-structure.png =420x)
+
+<img src="./assets/gradle-structure.png" width="250"/>
 
