@@ -484,3 +484,94 @@ public class MainActivity extends AppCompatActivity {
         - second xx abbreviation of region
 - Copy needed strings from strings.xml and reanslate to the other language
 - Strings for keys or names don't need to be translated
+
+# RecyclerView
+- Mechanism to be able tos croll through thousands of itmes without getting memory constraint
+- More advanced and flexible version of ListView
+- Flexible view for providing a limited window into a large dataset
+- Several different components work toghether to display the data
+    - RecyclerView object
+    - Layout manager
+    - ViewHolder objects
+    - Adpater
+
+
+## How it works
+1. RecylerView has an adapter that provides views when needed
+2. Adpater vinds data from a dat source to the RecyclerView
+3. Adapter sends view through an object called a ViewHolder to the RecyclerView
+4. LayoutManager tells RecyclerView how to layout the views
+
+<img src="./assets/recyclerview-structure.png" width="420"/>
+
+1. The RecyclerView first asks the adapter how many items it wil have to display
+2. RecyclerView asks adapter to create ViewHolder objects and inflate views from  
+    XML, by calling `onCreateViewHolder()`
+3. Adapters `onCreateViewHolder()` is responsible for creating views and returning ViewHolders
+    objects associated with these views
+3. After ViewHolders are created, RecyclerView
+    will call adapters `onBindViewHolder()` to populate
+    each item with data
+4. When scrolling, RecyclerView reuses ViewHolders asking the adapter to bind
+    new data to them
+
+## Optimizations
+- When first populated
+    - Creates and vinds data to view holders in view
+    - Creates and vind extra view holders on either side of on-screen list
+- When scrolling
+    - Creates new view holders ans necessary
+    - Saves off-screen view holders for reuse
+    - Wheb scrolling back: brings back view holders
+    - When scrolling further: Rebinds new data to view hodlers that have  
+        been off-screen longest
+- Wheb displayed items change
+    - Notify adpater by canceling a notify method
+    - Adatoper rebinds only the affected items
+
+## Layoutmanager
+The layout manager is a key part in the way recyling viewholders works
+- Determines when to recyle item view that are nog longer visible
+- Three stendard implementations
+    1. LinearLayoutManger  
+        Scrolls vertically (default) or horizontally
+    2. GridLayoutManager  
+        Arranges items in a grid
+    3. StaggeredLayoutManager  
+        offset gird of items
+
+## Viewholder
+Constainds refernece to biew object of the item
+- Are cached
+    - Only load them once (findViewById) wheb created
+- Example: 30 items, 4 views each
+    - 8 onscreen + 2 extra
+    - No caching
+    - ? How many extra calls to findVieById ?
+
+## Recyclerview Items
+An items is what will be displayed and wil be cached by a ViewHolder object
+- Consists of one or more views
+- Defined in a separate layout xml file
+
+## Adapter
+Separate class that extand from `RecyclerView.Adpater<ViewHolder>`
+- Has a public constructor to create the adapter and initialize members
+- Create new items in th form of ViewHolders
+    - `onCreateViewHolder()`
+        - Inflates items
+        - Instantiates new ViewHolders by calling constructor of inner class
+- Populates items with data
+    - `onBindViewHolder()`
+        - Called when view needs to be populated with data
+- Returns information about the data (how many items)
+    - `getItemCount()`
+        - Returns number of items in data source
+
+## Listener interface
+An interface to define the listener (never would have gussed that)
+- Implements one function
+    - Takes the clicked item index
+- Adapter class needs to store a reference to the listener in member variable
+    - Constructor takes extra paramter: the listener
+    - Listener paramter istoredi n member variable
