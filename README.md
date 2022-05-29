@@ -222,7 +222,7 @@ Defined in XML
 | Class Name       | Description                                                                                                               |
 |------------------|---------------------------------------------------------------------------------------------------------------------------|
 | LinearLayout     | Displays views in a single column or row.                                                                                 |
-| RelativeLayout   | Displays views positioned relative to eacxh other and htis view.                                                          |
+| RelativeLayout   | Displays views positioned relative to each other and htis view.                                                          |
 | FrameLayout      | A ViewGroup meant to contains a single child view.                                                                        |
 | ScrollView       | A FrameLayout that is designed to let the user scroll through the content in the view.                                    |
 | ConstraintLayout | This is a newer viewgroup; it postions views in a flexible way. We'll be exploring constraintslayout later in the lesson. |
@@ -360,7 +360,127 @@ public class MainActivity extends AppCompatActivity {
     - Activity should respond differently to each filter
 - Intent filter can contain 3 elements  
     1. \<action>
+        - Intent action accepted, in name attribute
+        - Must be a literal string value of an action
     2. \<data>
+        - Type of data accepted
     3. \<category>
+        - Intent category accpeted, in name attribute
+        - CATEGORY_DEFAULT must be included
     - A filter  can contain more than one instace of these elements
-        - Compontnt needs to be able to handle all combinations
+        - Component needs to be able to handle all combinations
+
+# User interface
+## Views
+- To build a UI Views are used???
+    - Has a lot of attrubutes that can be set
+- View
+    - A rectangle that appears on the screen
+    - Handles drawing and event handling
+- All basic widgets extend from a view
+
+### View attributes
+- Widht & height
+    - how child is laid out is dependent on its parent
+    - View widht & height show this well through their special attribte values
+        - wrap_content
+        - match_parent
+- Gravity
+    - 2 types
+        1. gravity attributes of text fields sets the position of the text inside a View
+        2. layout_gravity of a View positions the view relative to the parent layout
+- Padding and margin
+    - padding hsift content inside the View itself
+    - layout_margin adds a margin around the View and
+    - Both can be set
+        - Per edge: Top, Left, Bottom, Right
+        - For all edges at once
+- Visibility
+    - Every view has a visibility attribute
+    - 3 options
+        1. Visible
+        2. Invisible
+        3. Gone
+    - The attribute can be set durign runtime
+        - `setVisibility(View.INVISIBLE);`
+
+## View Groups
+- Multiple view together go in ViewGroups
+    - Base class for Android layouts
+    - Extends from View
+
+## Layouts
+- ViewGroups extends from view (why is this under layouts?)
+- ViewGroups can be nested
+- Lots of possibilities to create layouts (I hope so)
+- Nesting Results in decreased performance
+
+### FrameLayout
+| Class Name       | Description                                                                                                               |
+|------------------|---------------------------------------------------------------------------------------------------------------------------|
+| LinearLayout     | Displays views in a single column or row.                                                                                 |
+| RelativeLayout   | Displays views positioned relative to each other and htis view.                                                          |
+| FrameLayout      | A ViewGroup meant to contains a single child view.                                                                        |
+| ScrollView       | A FrameLayout that is designed to let the user scroll through the content in the view.                                    |
+| ConstraintLayout | This is a newer viewgroup; it postions views in a flexible way. We'll be exploring constraintslayout later in the lesson. |
+| GridLayout       | A layout that places its children in a rectangular grid.                                                                  |
+
+#### Frame
+- Display one View that is placed in the top left corner
+- Other View added will stack on top of eacht other
+
+#### Linear
+- Child Views are oredered horizontally or vertically
+- Each child can be given a weight to give it more or less space than the other Views
+
+#### Grid
+- Layout divided in cells for each View
+- View can span multiple cells
+
+#### Relative
+- Specify for each View if they should be aligned to parents edges
+- Specify for each View howthey should be aligned relative to each other
+
+#### Constraint
+- Allow to place Views relative to parent and toher Views
+- Uses contraints to specify how each View should be positioned and scaled accordingly  
+    relative to other views
+-  Allow for complicated layouts without having to nest different layouts
+- Views added in designer wil be set to left 
+- To position a view, atl east 2 constreaints need to be added for that view
+    1. 1 horizontal
+    2. 1 vertical
+- Allow for every complex layouts without nesting ViewGroups
+- Views can be easily moved together
+
+## Constraints
+- Are defined the 'app' namespace
+    - Attributes start with app: instead of android: 
+    - Automatically added with ConstraintLayout
+- Defined as edge connection to edge of other view
+- Keeps Views aligned to each other
+    - Layout_constraintLeft_toLeftOf
+    - Layout_constraintTop_toTopOf
+    - ..
+- Keeping views next to each other
+    - Layout_contraintLeft_toRightOf
+    - Layout_constraintTop_toBottomOf
+    - ...
+
+## Responsive Design
+- Different layouts can be used for different screens
+- An app can look differently depending on the
+    - Screen size
+    - Orientation
+- Parts that look the same in different layouts can be move to their own layout files
+    - then inculded in hte main layout files
+    - Make sure to not have an include loop
+
+## Localization
+- Translation of text trhough the strings.xml file
+- New values folder in the res directory for other languages/countries
+    - values-xx-xx with
+        - first xx abbreviation of language
+        - second xx abbreviation of region
+- Copy needed strings from strings.xml and reanslate to the other language
+- Strings for keys or names don't need to be translated
