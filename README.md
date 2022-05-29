@@ -1,4 +1,4 @@
-# Android
+# Intro
 
 ## Security
 
@@ -263,12 +263,104 @@ public class MainActivity extends AppCompatActivity {
     2. Configuration  
         - Construct task graph
         - Determine tasks to run and in which order
-    3. Execution
+    3. Execution  
         Run the selected tasks
-- Build Type 
+- Build Type  
     Debug, Release
 - Manifest Entries
     Overrides value of the manifest: App Name, min API version, target API version
 
 <img src="./assets/gradle-structure.png" width="250"/>
 
+# Input Events
+- Interaction between the user and the application
+- Extendable input
+
+## Event Listeneres
+- Interface in View vlass with one callback method
+- Called when a niew is triggered by user Interaction
+- Dependent on input controls
+- Examples
+    - OnClickListener -> OnClick()
+    - OnLongClickListener -> OnLongClick()
+    - OnTouchListener -> OnTouch()
+
+## Event Handlers
+- Used for extension of a View
+- Define default even behavior
+- Examples:
+    - onKeyDown
+    - onTouchEvent
+    - dispatchTouchEvent
+
+## Input controls
+- Interactive components in the UI
+- Described in layout trhough XML element
+- Supports set of specific input events
+- Examples:
+    - Button
+    - CheckBox
+    - Spinner
+    - EditText
+
+# Intent
+- Don't call eachother directly
+    - Use messaging objects called intents
+- Let an app request tahn an action takes place
+    - start new activity
+    - Display Photo from gallery
+    - Make phone call
+- Contains also:
+    - Which component to deliver to
+    - Small amount of data
+        - Packaged as extras
+        - Primitive tuples
+
+## Use cases
+- Starting an activity
+- Starting a service (API lvl <= 20)
+- Delivering a broadcast
+
+## Explicit intents
+- Specify which component will satisfy intent
+    - App's package name
+    - Class name
+- Typically used to start component in own app
+
+## Implicit intents
+- Don't specify component
+- No receiver specified
+- Declare general action to perform
+    - Other apps can respond to this
+    - System looks through intent filters of all apps to:
+        - Start activityy that can respond to the action
+        - Let user choose an appt ot respond to the action
+    - Data can be packaged
+
+
+### Starting Activity
+#### Intent
+- Describes activity to start
+- Carries necessary data
+- startActivity(Intent)
+
+#### Results
+- Calling activity receives separate intent object
+- Can handle object in specific callback function
+- startActivityForResult(Intent)
+
+#### Passing data
+- Data elements can be put into the intent envelope
+- Data elements are called extras (Primitives stored as key-value pairs)
+    - `putExtra()`: Give to intent
+    - `get<Type>Extra()`: get out of intent
+
+### Intent Filters
+- More than one intent filter can be declared for an activity
+    - Activity should respond differently to each filter
+- Intent filter can contain 3 elements  
+    1. \<action>
+    2. \<data>
+    3. \<category>
+    - A filter  can contain more than one instace of these elements
+        - Compontnt needs to be able to handle all combinations
