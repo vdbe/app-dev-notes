@@ -574,4 +574,148 @@ An interface to define the listener (never would have gussed that)
     - Takes the clicked item index
 - Adapter class needs to store a reference to the listener in member variable
     - Constructor takes extra paramter: the listener
-    - Listener paramter istoredi n member variable
+    - Listener paramter is tored in member variable
+
+# Networking & Threading
+## URI
+Unifrom Resource Identifier
+
+- String of characters taht identifies a resource
+    - URL for we and network
+    - GEO for physical location
+    - ...
+- Has a lot of parts, most of which are optional
+- For the resource types http, https, ftp, geo, ...
+    - [OPTIONAL] Authority
+        - [OPTIONAL] Username:Pasword
+        - [OPTIONAL] Port
+- Path: points to resource
+    - scheme:[//[user:password@]host["port]]path[?query[&extraquery]][#fragment]
+
+TODO: this entire chapter
+
+# Storing Data: Database
+- SQLite
+    - 2 operation modes
+        1. Read Only
+        2. Read/Write
+    - CRUD operations
+        - **C**reate -> Insert (W)
+        - **R**ead   -> Query  (R)
+        - **U**pdate -> Update (W)
+        - **D**elete -> Delete (W)
+    - Interal Storage
+        - Private to your app
+
+## Storing steps
+1. Define schame and contract
+2. Craete database
+3. Put info in database
+4. Read info from database
+5. Delete info from database
+6. Update database
+
+## Database contract
+- Feed reader
+```java
+public final class FeedReaderContract {
+    private FeedReaderContract() {}
+    public static class FeedEntry implements BaseColumns {
+        public static final String TABLE_NAME = "entry";
+        public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_SUBTITLE
+            = "subtitle";
+    }
+}
+```
+
+## Database creation
+- Create helper class
+    - Extension class from SQLiteOpenHelper
+        - Create database for first time with info from Contract class
+    - Gives a means to update database schema
+    - Provides a reference to database for other classes
+        - Potentially long running operations will only be performed when needed
+    - SQLiteOpenHelper
+        - 2 important constants
+            1. DATABASE_NAME: name of the file for the database
+            2. DATABSE_VERSION: verson number of the database
+        - 2 important methods
+            1. `oncreate`: creating database for the first time
+            2. `onUpgrade`: keeping database schema up to date
+
+    - To access the database this class needs to be instantiated
+
+TODO: Cursors
+
+# Prefrences
+The act of saving data to the phone
+5 ways on android
+1. onSavedInstanceState
+2. SharedPreferences
+3. SQLite Database
+4. Internal/Extertnal storage
+5. Server
+
+| Persistence Option | Type of data saved | Length of time saved |
+|-|-|-|
+| onSaveInstanceState | key/value (complex values) | While app is open |
+| SharedPreferences | key/value (primitive values) | Between app and phone restarts |
+| SQLite Database | Organized, more complicated text/numeric/boolean data | Between app and phone restarts |
+| Internal/External storage | Multimedia or larger data | Between app and phone restarts |
+| Server (Ex. Firebase) | Data that multple phones will access | Between app and phone restarts, deleting the app, using a different phone, ... |
+
+## OnSavedInstanceState
+- Used to store data to restore the state of view
+    - After screen rotations
+    - In change of screen widht
+    - When activity is destroyerd by system (memory constraints)
+- When activity recreated, original state recreated
+- Data only stored during active app use
+- Data stored in object called Bundle
+- Key-value pairs
+
+## SharedPrefrences
+- A file to store simple key-value pairs
+    - Key is a string
+    - Value is a primitive type
+- Used to store simple information about a user
+    - Player's name in a game
+    - Last visited website
+- used to store settings in an app
+    - Through a PreferenceFragment
+- Stored in filesystem
+    - Accessible as long as phone works and app hasn't been uninstalled
+
+#### PreferenceFragment
+- Subclass of fragment class
+- Specifically for settings
+- Provides standard layout
+- Preferences defined using XML
+    - Generates UI widgets in the fragment
+    - Comparable to inflating layout XML files
+- Updates in PreferenceFragment updates the SharedPreferences file
+
+TODO: Setup prefrences
+
+
+## Database
+- SQLite internal database provided
+- Stores more complicated information
+- Accessible directly or with ContentProvider
+
+## File Storage
+- 2 types
+    - Internal storage: HDD in phone (Euhm HDD?!)
+    - External storage: SD-card
+- To store large amounts of data
+    - Multimedia: Video, Audio, Pictures
+    - Large amounts of text
+
+## Online storage
+- Data stored online
+    - Own server
+    - Cloud service like Firbase
+- Accessible by different devices
+
+
